@@ -28,8 +28,15 @@ def move(my_history, their_history, my_score, their_score):
     
     if len (my_history) == 0:
         return 'c'
-  
-    return 'c'
+    if 'b' in (their_history):
+        if their_history [-3:] == ['c','c','c']:
+            return 'c'
+        else: 
+            return 'b'
+        
+    else:
+          return 'c'
+    
 def test_move(my_history, their_history, my_score, their_score, result):
     '''calls move(my_history, their_history, my_score, their_score)
     from this module. Prints error if return value != result.
