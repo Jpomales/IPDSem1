@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 ####
 # Each team's file must define four tokens:
 #     team_name: a string
@@ -6,28 +7,35 @@
 #     move: A function that returns 'c' or 'b'
 ####
 
-team_name = 'The name the team gives to itself' # Only 10 chars displayed.
-strategy_name = 'The name the team gives to this strategy'
-strategy_description = 'How does this strategy decide?'
+team_name = 'Chimera'
+strategy_name = 'Luar'
+strategy_description = ''' Betrayed by the words they said. The bot will scan the opponenets previuos three actions and 
+determine its next action based off what they opponent has done recently'''
     
 def move(my_history, their_history, my_score, their_score):
-    ''' Arguments accepted: my_history, their_history are strings.
-    my_score, their_score are ints.
-    
-    Make my move.
-    Returns 'c' or 'b'. 
+    '''Make my move based on the history of this player.
+    Returns 'c' or 'b' for collude or betray.
     '''
-
-    # my_history: a string with one letter (c or b) per round that has been played with this opponent.
-    # their_history: a string of the same length as history, possibly empty. 
-    # The first round between these two players is my_history[0] and their_history[0].
-    # The most recent round is my_history[-1] and their_history[-1].
+    '''
+    if 'b' in their_history:
+        return 'b'
+    else:
+        return 'c'
+    '''
     
-    # Analyze my_history and their_history and/or my_score and their_score.
-    # Decide whether to return 'c' or 'b'.
-    
-    return 'c'
-
+    if len(their_history) >= 3:
+        opponents_recent_moves = [their_history[-1],their_history[-2],their_history[-3] ]
+    b_count = 0
+    if len(their_history) < 3:
+        return 'b'
+    else:
+        for moves in opponents_recent_moves:
+            if 'b' in opponents_recent_moves:
+                b_count += 1
+                if b_count >= 2:
+                    return 'b'
+                else:
+                    return 'c'     
     
 def test_move(my_history, their_history, my_score, their_score, result):
     '''calls move(my_history, their_history, my_score, their_score)
@@ -53,7 +61,7 @@ if __name__ == '__main__':
               my_score=0,
               their_score=0,
               result='b'):
-         print 'Test passed'
+         print('Test passed')
      # Test 2: Continue betraying if they collude despite being betrayed.
     test_move(my_history='bbb',
               their_history='ccc', 
@@ -65,4 +73,4 @@ if __name__ == '__main__':
               # move('bbb', 'ccc', 0, 0) returns 'b'.
               my_score=0, 
               their_score=0,
-              result='b')             
+              result= 'b' )
